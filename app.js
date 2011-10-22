@@ -6,7 +6,7 @@
 var express = require('express');
 var ArticleProvider = require('./article-provider-memory').ArticleProvider;
 var app = module.exports = express.createServer();
-require.paths.unshift('support/mongoose/lib')
+//require.paths.unshift('support/mongoose/lib')
 
 // Configuration
 
