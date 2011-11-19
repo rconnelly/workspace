@@ -5,9 +5,13 @@
 
 var express = require('express');
 var ArticleProvider = require('./article-provider-memory').ArticleProvider;
-//var mongoose = require('mongoose');
+var mongoose = require('mongoose');
+require('./schema').Kynde;
+var Kynde = mongoose.model('Kynde');
+mongoose.connect('mongodb://localhost/kynde')
+
 var app = module.exports = express.createServer();
-//require.paths.unshift('support/mongoose/lib')
+
 
 // Configuration
 
@@ -37,7 +41,8 @@ var articleProvider= new ArticleProvider();
 
 app.get('/', function(req, res){
   articleProvider.findAll(function(error, docs) {
-      res.render('index', { 
+      res.render('index2', { 
+          layout: false,
           locals: {
               title: 'Blog',
               articles:docs
@@ -60,6 +65,20 @@ app.get('/activity/kynde', function(req, res) {
     res.render('kynde', { locals: {
         title: 'Send a Kynde'
     }
+    });
+});
+
+app.post('/activity/kynde', function(req, res) {
+    var k = new Kynde();
+    k.email = req.param('email');
+    k.message = req.param('message');
+    k.save(function(err) {
+      if (err) throw err;
+     
+       res.render('kynde-sent', { locals: {
+                title: 'Thanks!'
+            }
+        });
     });
 });
 

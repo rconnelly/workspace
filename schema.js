@@ -3,7 +3,16 @@
  * Module dependencies.
  */
 
+
 var mongoose = require('mongoose');
+var mail = require('mail').Mail({
+    host: 'smtp.gmail.com',
+    username: 'nomadapps.test@gmail.com',
+    password: 'test123123',
+    secure: true,
+    port: 587,
+    domain: 'gmail.com'
+});
 var Schema = mongoose.Schema;
 
 /**
@@ -12,58 +21,48 @@ var Schema = mongoose.Schema;
 
 // recursive embedded-document schema
 
-var Comment = new Schema();
+var Kynde = new Schema();
 
-Comment.add({
+Kynde.add({
     title     : { type: String, index: true }
-  , date      : Date
-  , body      : String
-  , comments  : [Comment]
-});
-
-var BlogPost = new Schema({
-    title     : { type: String, index: true }
-  , slug      : { type: String, lowercase: true, trim: true }
-  , date      : Date
-  , buf       : Buffer
-  , comments  : [Comment]
-  , creator   : Schema.ObjectId
-});
-
-var Person = new Schema({
-    name: {
-        first: String
-      , last : String
-    }
-  , email: { type: String, required: true, index: { unique: true, sparse: true } }
-  , alive: Boolean
+  , email        : String
+  , message      : String
 });
 
 /**
  * Accessing a specific schema type by key
  */
-
-BlogPost.path('date')
+/*
+Kynde.path('date')
 .default(function(){
    return new Date()
  })
 .set(function(v){
    return v == 'now' ? new Date() : v;
  });
-
+*/
 /**
  * Pre hook.
  */
 
-BlogPost.pre('save', function(next, done){
-  emailAuthor(done); // some async function
+Kynde.pre('save', function(next, done){
+  mail.message({
+  from: 'nomadapps.test@gmail.com',
+  to: this.email,
+  subject: 'You received a Kynde!'
+})
+.body(this.message)
+.send(function(err) {
+  if (err) throw err;
+  console.log('Sent! to: ' + this.email + ' kynde message: ' + this.message);
+});
   next();
 });
 
 /**
  * Methods
  */
-
+/*
 BlogPost.methods.findCreator = function (callback) {
   return this.db.model('Person').findById(this.creator, callback);
 }
@@ -75,6 +74,7 @@ BlogPost.statics.findByTitle = function (title, callback) {
 BlogPost.methods.expressiveQuery = function (creator, date, callback) {
   return this.find('creator', creator).where('date').gte(date).run(callback);
 }
+*/
 
 /**
  * Plugins
@@ -92,11 +92,10 @@ function slugGenerator (options){
   };
 };
 
-BlogPost.plugin(slugGenerator());
+Kynde.plugin(slugGenerator());
 
 /**
  * Define model.
  */
 
-mongoose.model('BlogPost', BlogPost);
-mongoose.model('Person', Person);
+mongoose.model('Kynde', Kynde);
