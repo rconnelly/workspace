@@ -1,16 +1,22 @@
 body
-  font-family "Helvetica Neue", "Lucida Grande", "Arial"
-  font-size 13px
-  text-align center
+  font-family clean, Helvetica, Arial, sans-serif;
+  font-size 22px
   text-stroke 1px rgba(255, 255, 255, 0.1)
   color #555
+  -webkit-font-smoothing antialiased
+  background #ECE9E9 -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#ccc));
+  background #ECE9E9 -moz-linear-gradient(top, white, #ccc);
+  padding 10px 100px
+  background-repeat no-repeat
+  
 h1, h2
   margin 0
   font-size 22px
   color #343434
+  text-align center
 h1
-  text-shadow 1px 2px 2px #ddd
-  font-size 60px
+  text-shadow 1px 2px 2px #eee
+  font-size 40px
 #articles
   text-align left
   margin-left auto
@@ -29,3 +35,83 @@ h1
     .body
         background-color #fff
         padding 10px
+
+#top, #main, #footer
+    margin-bottom 20px
+
+#top
+    h1
+        text-shadow 1px 2px 2px #eee
+        margin 0
+        color #343434
+#main
+    h2
+        color #fff
+
+#footer
+
+border-radius()
+  -webkit-border-radius arguments
+  -moz-border-radius arguments
+  border-radius arguments
+
+box-shadow()
+    -moz-box-shadow arguments
+    -webkit-box-shadow arguments
+
+form
+    border solid 1px rgba(128, 128, 128, 0.5)
+    width 600px
+    border-radius 20px
+    margin 0 auto
+    padding 30px
+    background-color #fff
+
+label
+    list-style-type none
+    margin-bottom 10px
+    display block
+    text-align center
+    vertical-align middle
+    font-size 22px
+    font-weight bold
+
+input, textarea
+    -webkit-transition-property -webkit-box-shadow, background
+    -webkit-transition-duration 0.25s
+    padding 20px
+    margin-bottom 30px
+    margin-left auto
+    margin-right auto
+    display block
+    background-color #fff
+    width 430px
+    border solid 1px rgba(128, 128, 128, 0.7)
+    border-radius 10px
+    font-size 22px
+                
+    &:hover
+        shadow 0px 0px 4px #000
+        background #fff
+
+    &[type="submit"]
+        -webkit-transition-property -webkit-box-shadow, background
+        -webkit-transition-duration 0.25s
+        background -webkit-gradient(linear, 0% 0%, 0% 100%, from(#963AD6), to(#781bb9))
+        background -moz-linear-gradient(19% 75% 90deg,#781bb9, #963AD6)
+        color #fff
+        text-transform uppercase
+        text-shadow #000 1px 1px
+        border-top 1px solid #ad64e0
+        margin-top 10px
+        width 473px
+        font-size 22px
+        
+        &:hover
+            box-shadow 0px 0px 2px #000
+            background -webkit-gradient(linear, 0% 0%, 0% 100%, from(#963AD6), to(#781bb9))
+            background -moz-linear-gradient(19% 75% 90deg,#781bb9, #963AD6)
+            
+        &:active
+            background -webkit-gradient(linear, 0% 0%, 0% 100%, from(#781bb9), to(#963AD6))
+            background -moz-linear-gradient(19% 75% 90deg,#963AD6, #781bb9)

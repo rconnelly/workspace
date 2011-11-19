@@ -5,6 +5,7 @@
 
 var express = require('express');
 var ArticleProvider = require('./article-provider-memory').ArticleProvider;
+//var mongoose = require('mongoose');
 var app = module.exports = express.createServer();
 //require.paths.unshift('support/mongoose/lib')
 
@@ -51,6 +52,13 @@ app.get('/', function(req, res){
 app.get('/blog/new', function(req, res) {
     res.render('new.jade', { locals: {
         title: 'New Post'
+    }
+    });
+});
+
+app.get('/activity/kynde', function(req, res) {
+    res.render('kynde', { locals: {
+        title: 'Send a Kynde'
     }
     });
 });
