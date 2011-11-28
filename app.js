@@ -4,14 +4,12 @@
  */
 
 var express = require('express');
-var ArticleProvider = require('./article-provider-memory').ArticleProvider;
 var mongoose = require('mongoose');
 require('./schema').Kynde;
 var Kynde = mongoose.model('Kynde');
 mongoose.connect('mongodb://localhost/kynde')
 
 var app = module.exports = express.createServer();
-
 
 // Configuration
 
@@ -35,10 +33,8 @@ app.configure('production', function(){
 
 // Providers
 
-var articleProvider= new ArticleProvider();
-
 // Routes
-
+/*
 app.get('/', function(req, res){
   articleProvider.findAll(function(error, docs) {
       res.render('index2', { 
@@ -49,10 +45,11 @@ app.get('/', function(req, res){
           }
       });
   });
+  */
   /*res.render('index', {
     title: 'My Blog'
   }); */
-});
+//});
 
 app.get('/blog/new', function(req, res) {
     res.render('new.jade', { locals: {
@@ -61,20 +58,19 @@ app.get('/blog/new', function(req, res) {
     });
 });
 
-app.get('/activity/kynde', function(req, res) {
+app.get('/', function(req, res) {
     res.render('kynde', { locals: {
         title: 'Send a Kynde'
     }
     });
 });
 
-app.post('/activity/kynde', function(req, res) {
+app.post('/kynde', function(req, res) {
     var k = new Kynde();
     k.email = req.param('email');
     k.message = req.param('message');
     k.save(function(err) {
       if (err) throw err;
-     
        res.render('kynde-sent', { locals: {
                 title: 'Thanks!'
             }
